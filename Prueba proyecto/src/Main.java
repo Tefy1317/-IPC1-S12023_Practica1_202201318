@@ -14,6 +14,7 @@ public class Main {
     static double total;
     static double descuentofinal;
     public static double subtotal;
+    public static String codigodescuento;
     static int productoelegido;
 
 
@@ -141,19 +142,30 @@ public class Main {
                 System.out.println("---------------------------------------------");
                 System.out.println("PRODUCTO - PRECIO - UNIDADES - SUBTOTAL");
                 System.out.println("---------------------------------------------");
-                for(int i = 1;i<productos.length; i++) {
-                    if(productos[i] != null) {
-                        System.out.println(productos[i] + "  -   " + precios[i] + "  -   " + unidades[i] + "  -   " + unidades[i] * precios[i]);
-                        System.out.println("SUBTOTAL: " + subtotal + "------------------------------");
-                        for (int f = 0; f < descuento.length; f++) {
-                            System.out.println("DESCUENTO DE: " + porcentaje[f]+"%");
+                if(descuentofinal != 0){
+                    for(int i = 1;i<productos.length; i++) {
+                        if(productos[i] != null) {
+                            System.out.println(productos[i] + "  -   " + precios[i] + "  -   " + unidades[i] + "  -   " + unidades[i] * precios[i]);
                         }
-                        System.out.println("--------------------------------------------------------------------------------");
-                        System.out.println("El total con el descuento aplicado es: " + total + " has ahorrado " + descuentofinal);
-                        System.out.println("--------------------------------------------------------------------------------");
-                        System.out.println("TOTAL: " + total);
+                            System.out.println("SUBTOTAL: " + subtotal + "------------------------------");
+                            for (int f = 0; f < descuento.length; f++) {
+                                System.out.println("DESCUENTO DE: " + porcentaje[f]+"%");
+                            }
+                            System.out.println("--------------------------------------------------------------------------------");
+                            System.out.println("El total con el descuento aplicado es: " + total + " has ahorrado " + descuentofinal);
+                            System.out.println("--------------------------------------------------------------------------------");
+                            System.out.println("TOTAL: " + total);
+                    }
+
+                }else if(descuentofinal == 0){
+                    for(int i = 1;i<productos.length; i++) {
+                        if (productos[i] != null) {
+                            System.out.println(productos[i] + "  -   " + precios[i] + "  -   " + unidades[i] + "  -   " + unidades[i] * precios[i]);
+                            System.out.println("TOTAL: " + subtotal + "------------------------------");
+                        }
                     }
                 }
+
                 break;
             case 2:
                 String consumidorfinal = "C/F";
@@ -169,9 +181,11 @@ public class Main {
                 System.out.println("---------------------------------------------");
                 System.out.println("PRODUCTO - PRECIO - UNIDADES - SUBTOTAL");
                 System.out.println("---------------------------------------------");
-                for(int i = 1;i<productos.length; i++) {
-                    if(productos[i] != null) {
-                        System.out.println(productos[i] + "  -   " + precios[i] + "  -   " + unidades[i] + "  -   " + unidades[i] * precios[i]);
+                if(descuentofinal != 0){
+                    for(int i = 1;i<productos.length; i++) {
+                        if(productos[i] != null) {
+                            System.out.println(productos[i] + "  -   " + precios[i] + "  -   " + unidades[i] + "  -   " + unidades[i] * precios[i]);
+                        }
                         System.out.println("SUBTOTAL: " + subtotal + "------------------------------");
                         for (int f = 0; f < descuento.length; f++) {
                             System.out.println("DESCUENTO DE: " + porcentaje[f]+"%");
@@ -180,6 +194,14 @@ public class Main {
                         System.out.println("El total con el descuento aplicado es: " + total + " has ahorrado " + descuentofinal);
                         System.out.println("--------------------------------------------------------------------------------");
                         System.out.println("TOTAL: " + total);
+                    }
+
+                }else if(codigodescuento == null){
+                    for(int i = 1;i<productos.length; i++) {
+                        if (productos[i] != null) {
+                            System.out.println(productos[i] + "  -   " + precios[i] + "  -   " + unidades[i] + "  -   " + unidades[i] * precios[i]);
+                            System.out.println("TOTAL: " + subtotal + "------------------------------");
+                        }
                     }
                 }
                 break;
@@ -200,7 +222,9 @@ public class Main {
                 System.out.println("Escriba el numero de la posición en la que se encuentre el producto que desea comprar: (1-10)");
                 int productoelegido = leer.nextInt();
                 for(int i = 1;i<productos.length; i++){
-                    System.out.println("El producto elegido es: "+productos[productoelegido]+" "+"con precio de: "+precios[productoelegido]);
+                    if(productos[i] != null){
+                        System.out.println("El producto elegido es: "+productos[productoelegido]+" "+"con precio de: "+precios[productoelegido]);
+                    }
                 }
                 System.out.println("Ingrese el número de unidades del producto seleccionado que desea adquirir");
                 Scanner uni = new Scanner(System.in);
@@ -213,6 +237,7 @@ public class Main {
                         unidades[i] = 0;
                     }
                 }
+
     }
     public static void comprarotroproducto(){
 
@@ -231,51 +256,52 @@ public class Main {
                     return;
                 }
             }while(elegir !=2);
+        subtotal = 0;
+        for(int i = 1;i<productos.length; i++) {
+            System.out.println("Precio del producto: " + precios[i]);
+            System.out.println("Unidades del producto: " + unidades[i]);
+            subtotal = subtotal + (unidades[i] * precios[i]);
+            System.out.println("El total es: " + subtotal);
+        }
             aplicarDescuento();
     }
 
     public static void aplicarDescuento(){
-        subtotal = 0;
-              for(int i = 0;i<productos.length; i++){
-                      subtotal = subtotal + (unidades[i]*precios[i]);
-                  System.out.println("El total es: "+ subtotal);
-                  System.out.println("¿Cuenta con algún código de descuento?");
-                  System.out.println("1. Si");
-                  System.out.println("2. No");
+            System.out.println("¿Cuenta con algún código de descuento?");
+            System.out.println("1. Si");
+            System.out.println("2. No");
                   Scanner opc = new Scanner(System.in);
                   int opci = opc.nextInt();
                   if(opci == 1) {
-                      do {
-                          Scanner desc = new Scanner(System.in);
-                          System.out.println("Ingrese el código de descuento: ");
-                          String codigodescuento = desc.nextLine();
-                          for (int f = 0; f < descuento.length; f++) {
-                              if (codigodescuento.equals(descuento[f])) {
-                                  descuentofinal = subtotal * porcentaje[f] / 100;
-                                  total = subtotal - descuentofinal;
-                                  System.out.println("--------------------------------------------------------------------------------");
-                                  System.out.println("DESCUENTO APLICADO");
-                                  System.out.println("--------------------------------------------------------------------------------");
+                         do{
+                             Scanner desc = new Scanner(System.in);
+                             System.out.println("Ingrese el código de descuento: ");
+                             String codigodescuento = desc.nextLine();
+                             for (int f = 0; f < descuento.length; f++) {
+                                 if (codigodescuento.equals(descuento[f])) {
+                                     descuentofinal = subtotal * porcentaje[f] / 100;
+                                     total = subtotal - descuentofinal;
+                                     System.out.println("--------------------------------------------------------------------------------");
+                                     System.out.println("DESCUENTO APLICADO");
+                                     System.out.println("--------------------------------------------------------------------------------");
 
-                                  return;
-                              }
-                          }
-                          for (int f = 0; f < descuento.length; f++) {
-                              if(codigodescuento != descuento[f]){
-                                  if(descuento[f] != null) {
-                                      System.out.println("---------------------------------------------");
-                                      System.out.println("NO EXISTE ESE CÓDIGO DE DESCUENTO");
-                                      System.out.println("---------------------------------------------");
-                                  }
-                              }
-                          }
-                      }while(opci!=2);
+                                     return;
+                                 }
+                             }
+                             for (int f = 0; f < descuento.length; f++) {
+                                 if (codigodescuento != descuento[f]) {
+                                     if (descuento[f] != null) {
+                                         System.out.println("---------------------------------------------");
+                                         System.out.println("NO EXISTE ESE CÓDIGO DE DESCUENTO");
+                                         System.out.println("---------------------------------------------");
+                                     }
+                                 }
+                             }
+                         }while(opci == 2);
 
                   }else if (opci == 2) {
                       System.out.println("---------------------------------------------");
-                      return;
                   }
-              }
     }
     public static void emitirreporte(){
             System.out.println("Listado de productos vendidos");
@@ -329,8 +355,8 @@ public class Main {
     public static void main (String[]args) {
 
         //Ingreso del usuario//////////////////////////////
-        String usuario = "1"; //""cajero_202201318";
-        String password = "2"; //""ipc1_202201318";
+        String usuario = "cajero_202201318";
+        String password = "ipc1_202201318";
         String entrada1, entrada2;
 
         do {
